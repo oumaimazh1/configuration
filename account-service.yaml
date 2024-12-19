@@ -1,59 +1,39 @@
-server:
-  error:
-    include-message: always
-    include-binding-errors: always
-  port: 8080
-  
-spring:
-  datasource:
-    password: oumaima
-    url: jdbc:postgresql://localhost:5432/covoiturage_db
-    username: postgres
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-    show-sql: true
+# Configuration du serveur
+server.error.include-message=always
+server.error.include-binding-errors=always
+server.port=8080
 
-  mail:
-    host: localhost
-    port: 1025
-    username: hello
-    password: hello
-    properties:
-      mail:
-        smtp:
-          ssl:
-            trust: "*"
-          auth: true
-          starttls:
-            enable: true
-          connectiontimeout: 5000
-          timeout: 3000
-          writetimeout: 5000
+# Configuration de la source de données
+spring.datasource.url=jdbc:postgresql://localhost:5432/covoiturage_db
+spring.datasource.username=postgres
+spring.datasource.password=oumaima
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
 
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: YOUR_GOOGLE_CLIENT_ID
-            client-secret: YOUR_GOOGLE_CLIENT_SECRET
-            scope: email, profile
-            redirect-uri: "{baseUrl}/login/oauth2/code/google"
-            client-authentication-method: post
-            authorization-grant-type: authorization_code
-        provider:
-          google:
-            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
-            token-uri: https://oauth2.googleapis.com/token
-            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
-            user-name-attribute: sub
+# Configuration du mail
+spring.mail.host=localhost
+spring.mail.port=1025
+spring.mail.username=hello
+spring.mail.password=hello
+spring.mail.properties.mail.smtp.ssl.trust=*
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.connectiontimeout=5000
+spring.mail.properties.mail.smtp.timeout=3000
+spring.mail.properties.mail.smtp.writetimeout=5000
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+# Configuration OAuth2 Google
+spring.security.oauth2.client.registration.google.client-id=YOUR_GOOGLE_CLIENT_ID
+spring.security.oauth2.client.registration.google.client-secret=YOUR_GOOGLE_CLIENT_SECRET
+spring.security.oauth2.client.registration.google.scope=email,profile
+spring.security.oauth2.client.registration.google.redirect-uri={baseUrl}/login/oauth2/code/google
+spring.security.oauth2.client.registration.google.client-authentication-method=post
+spring.security.oauth2.client.registration.google.authorization-grant-type=authorization_code
+
+spring.security.oauth2.client.provider.google.authorization-uri=https://accounts.google.com/o/oauth2/v2/auth
+spring.security.oauth2.client.provider.google.token-uri=https://oauth2.googleapis.com/token
+spring.security.oauth2.client.provider.google.user-info-uri=https://www.googleapis.com/oauth2/v3/userinfo
+spring.security.oauth2.client.provider.google.user-name-attribute=sub
+
+# Configuration Eureka
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
