@@ -2,15 +2,37 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: gateway-service
+
   cloud:
     gateway:
       discovery:
         locator:
-          enabled: true
-          lower-case-service-id: false  # Désactive la conversion en minuscules
+          enabled: true                # Active la découverte des services dans Eureka
+          lower-case-service-id: true  # Assurez-vous que les noms des services sont en minuscules dans Eureka
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin # Évite les en-têtes redondants
+        - AddRequestHeader=X-Gateway-Header, GatewayService # Ajoute un en-tête personnalisé à toutes les requêtes
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000" # Exemple d'origines autorisées (modifiez si nécessaire)
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"
+
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
-    fetch-registry: true
-    register-with-eureka: true
+      defaultZone: http://localhost:8761/eureka/  # URL du serveur Eureka
+    fetch-registry: true                         # Récupère les services enregistrés
+    register-with-eureka: true                   # Inscrit le Gateway Service dans Eureka
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG    # Active les logs détaillés pour le Gateway
+    com.netflix.discovery: WARN                 # Réduit les logs moins importants d'Eureka

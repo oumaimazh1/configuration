@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: TrajetService # Nom du service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/covoiturage_db
+    username: postgres
+    password: oumaima
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8082 # Port dédié au service trajet
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Serveur Eureka pour l'enregistrement
+    fetch-registry: true
+    register-with-eureka: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework: DEBUG
