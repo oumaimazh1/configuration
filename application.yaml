@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/oumaimazh1/configuration.git # URL du dépôt
+          default-label: main                                  # Branche par défaut
+
+logging:
+  level:
+    root: INFO
